@@ -29,13 +29,10 @@ public class TechJobs {
 
         // Allow the user to search until they manually quit
         while (true) {
-
             String actionChoice = getUserSelection("View jobs by (type 'x' to quit):", actionChoices);
-
             if (actionChoice == null) {
                 break;
             } else if (actionChoice.equals("list")) {
-
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
@@ -43,7 +40,6 @@ public class TechJobs {
                 } else {
 
                     ArrayList<String> results = JobData.findAll(columnChoice);
-
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
@@ -53,14 +49,12 @@ public class TechJobs {
                 }
 
             } else { // choice is "search"
-
                 // How does the user want to search (e.g. by skill or employer)
                 String searchField = getUserSelection("Search by:", columnChoices);
 
                 // What is their search term?
                 System.out.println("\nSearch term:");
                 String searchTerm = in.nextLine();
-
                 if (searchField.equals("all")) {
                     printJobs(JobData.findByValue(searchTerm));
                 } else {
@@ -119,7 +113,19 @@ public class TechJobs {
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        if (someJobs.isEmpty() || someJobs == null) {
+            System.out.print("No Results");
+        } else {
+            for (HashMap<String, String> aJob : someJobs) {
+                System.out.println("\n*****");
+                for (String jobKey : aJob.keySet()) {
+                    System.out.println(jobKey + ": " + aJob.get(jobKey));
 
-        System.out.println("printJobs is not implemented yet");
+                }
+                System.out.println("*****");
+            }
+        }
     }
+
 }
+//System.out.println("printJobs is not implemented yet");

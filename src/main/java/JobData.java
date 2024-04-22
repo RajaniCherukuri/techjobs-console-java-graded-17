@@ -41,7 +41,6 @@ public class JobData {
                 values.add(aValue);
             }
         }
-
         return values;
     }
 
@@ -49,6 +48,7 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
+
 
         return allJobs;
     }
@@ -61,25 +61,20 @@ public class JobData {
      * with "Enterprise Holdings, Inc".
      *
      * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param value Value of the field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
-
         // load data, if not already loaded
         loadData();
-
+        value = value.toLowerCase();
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-
         for (HashMap<String, String> row : allJobs) {
-
             String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value)) {
                 jobs.add(row);
             }
         }
-
         return jobs;
     }
 
@@ -90,12 +85,22 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
-
+        value = value.toLowerCase();
         // load data, if not already loaded
         loadData();
 
         // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        for (HashMap<String, String> row : allJobs) {
+            for (String aValue : row.values()) {
+                if (aValue.toLowerCase().contains(value)) {
+                    if (!jobs.contains(value)) {
+                        jobs.add(row);
+                    }
+                }
+            }
+        }
+        return jobs;
     }
 
     /**
@@ -140,3 +145,38 @@ public class JobData {
     }
 
 }
+
+
+//Requirement
+//Allows users to search job listings by one of several fields.
+// Display lists of all values of a given field in the system
+// (e.g. all employers, or all locations).
+/*
+*****
+position type: Data Scientist / Business Intelligence
+name: Sr. IT Analyst (Data/BI)
+employer: Bull Moose Industries
+location: Saint Louis
+core competency: Statistical Analysis
+*****
+
+*****
+position type: Web - Back End
+name: Ruby specialist
+employer: LaunchCode
+location: Saint Louis
+core competency: Javascript
+*****
+*/
+
+/*Search term:
+Example Search Term with No Results
+No Results
+View jobs by (type 'x' to quit):
+0 - Search
+1 - List
+*/
+
+//Implement print jobs
+//Create method findbbyvalue()
+//Make search methods insensitve
